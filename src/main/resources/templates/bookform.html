@@ -1,6 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html th:replace="layout/masterLayout :: layout(~{::main})" xmlns:th="http://www.thymeleaf.org">
 <body>
-
+<main role="main">
+    <div class="container my-4">
+        <div class="row">
+            <div class="col">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h3>Book Form</h3>
+                    </div>
+                    <div class="card-body">
+                        <form th:object="${book}" th:action="@{/book-form}" method="post">
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input type="text" id="title" class="form-control"
+                                       th:classappend="${#fields.hasErrors('title')} ? 'is-invalid'"
+                                       th:field="*{title}">
+                                <small class="invalid-feedback" th:if="${#fields.hasErrors('title')}"
+                                       th:errors="*{title}">
+                                </small>
+                            </div>
+                            <div class="form-group">
+                                <label for="price">price</label>
+                                <input type="number" id="price" class="form-control"
+                                       th:classappend="${#fields.hasErrors('price')} ? 'is-invalid'"
+                                       th:field="*{price}">
+                                <small class="invalid-feedback" th:if="${#fields.hasErrors('price')}"
+                                       th:errors="*{price}">
+                                </small>
+                            </div>
+                            <div class="form-group">
+                                <label for="yearPublished">YearPublished</label>
+                                <input type="date" id="yearPublished" class="form-control"
+                                       th:classappend="${#fields.hasErrors('yearPublished')} ? 'is-invalid'"
+                                       th:field="*{yearPublished}">
+                                <small class="invalid-feedback" th:if="${#fields.hasErrors('yearPublished')}"
+                                       th:errors="*{yearPublished}">
+                                </small>
+                            </div>
+                            <div class="form-group">
+                                <label for="publisher">Publisher</label>
+                                <input type="text" id="publisher" class="form-control"
+                                        th:classappend="${#fields.hasErrors('publisher')}? 'is-invalid'"
+                                        th:field="*{publisher}">
+                                <small class="invalid-feedback" th:if="${#fields.hasErrors('publisher')}"
+                                        th:errors="*{publisher}"></small>
+                            </div>
+                          <!-- <div class="form-group">
+                                <label for="image">Image</label>
+                                <input type="text" id="image" class="form-control"
+                                        th:classappend="${#fields.hasErrors('imageUrl')} ? 'is-invalid'"
+                                        th:field="*{imgUrl}">
+                                <small class="invalid-feedback" th:if="${#fields.hasErrors('imageUrl')}"
+                                        th:errors="*{imgUrl}">
+                                </small>
+                            </div>-->
+                            <div class="form-group">
+                                <label for="author">Author</label>
+                                <input type="text" id="author" class="form-control"
+                                        th:classappend="${#fields.hasErrors('author')} ? 'is-invalid'"
+                                        th:field="*{author}">
+                                <small class="invalid-feedback" th:if="${#fields.hasErrors('author')}"
+                                        th:errors="*{author}">
+                                </small>
+                            </div>
+                            <input type="submit" class="btn btn-info btn-block" value="Save Book">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 </body>
 </html>

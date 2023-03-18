@@ -49,11 +49,12 @@ public class BooksController {
     @PostMapping("/book-form")
     public String saveBook(@Valid Book book, BindingResult result, RedirectAttributes redirectAttributes){
         if(result.hasErrors()){
+            System.out.println("error");
             return "bookform";
         }
         bookService.saveBook(book);
         redirectAttributes.addFlashAttribute("success",true);
-        return "redirect:/books";
+        return "redirect:/list-books";
     }
     @GetMapping("/list-books")
     public String listAllBooks(Model model){

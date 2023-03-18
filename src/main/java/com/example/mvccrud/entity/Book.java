@@ -27,7 +27,7 @@ public class Book {
     @NotBlank
     @NotEmpty(message = "Publisher cannot be empty")
     private String publisher;
-    @NotEmpty(message = "Image can't be empty")
+//    @NotEmpty(message = "Image can't be empty")
     private String imgUrl;
 
     @ManyToOne
@@ -36,10 +36,12 @@ public class Book {
     public Book() {
     }
 
-    public Book(String title, double price, LocalDate yearPublished, String publisher) {
+    public Book(String title, double price, LocalDate yearPublished, String publisher,String imgUrl) {
         this.title = title;
         this.price = price;
         this.yearPublished = yearPublished;
         this.publisher = publisher;
+
     }
+
 }
