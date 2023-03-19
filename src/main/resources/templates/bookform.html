@@ -46,15 +46,15 @@
                                 <small class="invalid-feedback" th:if="${#fields.hasErrors('publisher')}"
                                         th:errors="*{publisher}"></small>
                             </div>
-                          <!-- <div class="form-group">
+                           <div class="form-group">
                                 <label for="image">Image</label>
                                 <input type="text" id="image" class="form-control"
-                                        th:classappend="${#fields.hasErrors('imageUrl')} ? 'is-invalid'"
+                                        th:classappend="${#fields.hasErrors('imgUrl')} ? 'is-invalid'"
                                         th:field="*{imgUrl}">
-                                <small class="invalid-feedback" th:if="${#fields.hasErrors('imageUrl')}"
+                                <small class="invalid-feedback" th:if="${#fields.hasErrors('imgUrl')}"
                                         th:errors="*{imgUrl}">
                                 </small>
-                            </div>-->
+                            </div>
                             <div class="form-group">
                                 <label for="author">Author</label>
                                 <input type="text" id="author" class="form-control"
