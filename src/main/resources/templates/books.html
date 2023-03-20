@@ -2,54 +2,67 @@
 <html th:replace="layout/masterLayout :: layout(~{::main})" xmlns:th="http://www.thymeleaf.org">
 <body>
 <main role="main">
-    <div class="container my-5">
+    <div class="container my-5 shadow">
         <div class="row">
             <div class="col">
                 <div th:if="${success}" class="alert alert-success" role="alert">
                     <span>Book is successfully saved.</span>
                 </div>
-                <div class="col">
-                    <div th:if="${delete}" class="alert alert-success" role="alert">
-                        <span>Book is successfully deleted.</span>
-                    </div>
-                    <div class="card-header">
-                        <h3>Books <i class="bi bi-book"></i></h3>
-                    </div>
-                    <div class="card-body">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Title</th>
-                                <th>Price</th>
-                                <th>YearPublished</th>
-                                <th>Publisher</th>
-                                <th>Author</th>
-                                <th>Action</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+                <div th:if="${delete}" class="alert alert-success" role="alert">
+                    <span>Book is successfully deleted.</span>
+                </div>
+                <div th:if="${update}" class="alert alert-success" role="alert">
+                    <span>Book is successfully updated.</span>
+                </div>
+                <div class="card-header">
+                    <h3>Books <i class="bi bi-book"></i></h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Title</th>
+                            <th>Price</th>
+                            <th>YearPublished</th>
+                            <th>Publisher</th>
+                            <th>Author</th>
+                            <th>Action</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <form action="#">
                             <tr th:each="bk : ${books}">
                                 <td th:text="${bk.id}"></td>
-                                <td th:text="${bk.title}"></td>
-                                <td th:text="${'$'+ bk.price}"></td>
-                                <td th:text="${bk.yearPublished}"></td>
-                                <td th:text="${bk.publisher}"></td>
+                                <td th:text="${bk.title}" th:if="${!bk.render}"></td>
+                                <td th:if="${bk.render}"><input type="text" class="form-control" ></td>
+
+                                <td th:text="${'$'+ bk.price}" th:if="${!bk.render}"></td>
+                                <td th:if="${bk.render}"><input type="text" class="form-control" ></td>
+
+                                <td th:text="${bk.yearPublished}" th:if="${!bk.render}"></td>
+                                <td th:if="${bk.render}"><input type="text" class="form-control" ></td>
+
+                                <td th:text="${bk.publisher}" th:if="${!bk.render}"></td>
+                                <td th:if="${bk.render}"><input type="text" class="form-control" ></td>
+
                                 <td th:text="${bk.author.name}"></td>
                                 <td>
                                     <a th:href="@{'/book/remove?id='+${bk.id}}"
                                        class="btn btn-outline-danger">Delete</a>
-                                    <a th:href="@{'/book/remove?id='+${bk.id}}"></a>
+<!--                                    <a th:href="@{'/book/remove?id='+${bk.id}}"></a>-->
                                 </td>
                                 <td>
-                                    <a th:href="@{'/book/update?id='+${bk.id}}" class="btn btn-outline-info">Update</a>
+                                    <a th:href="@{'/book/ui-update?id='+${bk.id}}" class="btn btn-outline-info">Update</a>
                                 </td>
                             </tr>
-                            </tbody>
-                        </table>
-                        <a th:href="@{/book-form}" class="btn btn-primary my-3">New Book</a>
-                    </div>
+                        </form>
+                        </tbody>
+                    </table>
+                    <a th:href="@{/book-form}" class="btn btn-primary my-3">New Book</a>
+                    <a th:each="bk1 : ${books}" th:if="${bk1.render}" th:href="@{/list-books}"
+                       class="btn btn-outline-warning mr-auto">Cancel</a>
                 </div>
             </div>
         </div>

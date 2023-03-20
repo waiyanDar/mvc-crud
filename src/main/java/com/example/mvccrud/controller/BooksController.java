@@ -4,7 +4,6 @@ import com.example.mvccrud.entity.Author;
 import com.example.mvccrud.entity.Book;
 import com.example.mvccrud.service.BookService;
 import jakarta.validation.Valid;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -12,6 +11,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class BooksController {
@@ -27,16 +29,35 @@ public class BooksController {
             model.addAttribute("authors",bookService.listAuthors());
             return "book-update";
         }
+        book.setId(bookId);
         bookService.update(book);
+        attributes.addFlashAttribute("update",true);
         return "redirect:/list-books";
+    }
+
+    @GetMapping("/book/ui-update")
+    public String uIUpdate(@RequestParam("id")int id, Model model){
+        Book updateBook = bookService.findBookById(id);
+        List<Book> bookList=bookService.listBooks().stream()
+//                .filter(b -> b.equals(updateBook))
+                .map(b ->{
+                    if(b.equals(updateBook)) {
+                        b.setRender(true);
+                    }
+                    return b;
+                }).collect(Collectors.toList());
+        model.addAttribute("books",bookList);
+        return "books";
     }
 
     @GetMapping("/book/update")
     public String updateForm(@RequestParam("id")int id,Model model){
         model.addAttribute("book",bookService.findBookById(id));
+        this.bookId=id;
         model.addAttribute("authors",bookService.listAuthors());
         return "book-update";
     }
+    int bookId;
 
     @GetMapping("/book/remove")
     public String removeBook(@RequestParam("id")int id,RedirectAttributes attributes){
@@ -85,10 +106,10 @@ public class BooksController {
     }
     @RequestMapping("/list-books")
     public String listAllBooks(Model model){
+        model.addAttribute("update",model.containsAttribute("update"));
         model.addAttribute("delete",model.containsAttribute("delete"));
         model.addAttribute("success",model.containsAttribute("success"));
         model.addAttribute("books",bookService.listBooks());
-
         return "books";
     }
 }

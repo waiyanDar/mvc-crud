@@ -20,7 +20,7 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @NotEmpty
+    @NotEmpty(message = "name cannot be empty!")
     @Pattern(regexp = "[A-Z a-z]*",message = "Name cannot contain illegal characters.")
     private String name;
 
@@ -33,7 +33,7 @@ public class Author {
     private String email;
 
 
-    @OneToMany(mappedBy = "author",orphanRemoval = true)
+    @OneToMany(mappedBy = "author",orphanRemoval = true,cascade = CascadeType.ALL)
     private List<Book> books = new ArrayList<>();
 
     public Author() {
