@@ -21,7 +21,7 @@ public class Author {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NotEmpty
-    @Pattern(regexp = "[A-Za-z]*",message = "Name cannot contain illegal characters.")
+    @Pattern(regexp = "[A-Z a-z]*",message = "Name cannot contain illegal characters.")
     private String name;
 
 
