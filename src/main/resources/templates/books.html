@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html th:replace="layout/masterLayout :: layout(~{::main})" xmlns:th="http://www.thymeleaf.org">
 <body>
-    <main role="main">
-        <div class="container my-5">
-            <div class="row">
+<main role="main">
+    <div class="container my-5">
+        <div class="row">
+            <div class="col">
+                <div th:if="${success}" class="alert alert-success" role="alert">
+                    <span>Book is successfully saved.</span>
+                </div>
                 <div class="col">
+                    <div th:if="${delete}" class="alert alert-success" role="alert">
+                        <span>Book is successfully deleted.</span>
+                    </div>
                     <div class="card-header">
                         <h3>Books <i class="bi bi-book"></i></h3>
                     </div>
@@ -17,19 +24,27 @@
                                 <th>Price</th>
                                 <th>YearPublished</th>
                                 <th>Publisher</th>
-                                <th>ImageUrl</th>
                                 <th>Author</th>
+                                <th>Action</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="bk : ${books}">
                                 <td th:text="${bk.id}"></td>
                                 <td th:text="${bk.title}"></td>
-                                <td th:text="${bk.price}"></td>
+                                <td th:text="${'$'+ bk.price}"></td>
                                 <td th:text="${bk.yearPublished}"></td>
                                 <td th:text="${bk.publisher}"></td>
-                                <td th:text="${bk.imgUrl}"></td>
                                 <td th:text="${bk.author.name}"></td>
+                                <td>
+                                    <a th:href="@{'/book/remove?id='+${bk.id}}"
+                                       class="btn btn-outline-danger">Delete</a>
+                                    <a th:href="@{'/book/remove?id='+${bk.id}}"></a>
+                                </td>
+                                <td>
+                                    <a th:href="@{'/book/update?id='+${bk.id}}" class="btn btn-outline-info">Update</a>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -38,6 +53,7 @@
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+</main>
 </body>
 </html>

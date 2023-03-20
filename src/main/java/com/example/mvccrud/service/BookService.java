@@ -4,6 +4,7 @@ import com.example.mvccrud.dao.AuthorDao;
 import com.example.mvccrud.dao.BookDao;
 import com.example.mvccrud.entity.Author;
 import com.example.mvccrud.entity.Book;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,31 @@ public class BookService {
     }
     public List<Book> listBooks(){
         return bookDao.findAll();
+    }
+    @Transactional
+    public void removeBook(int id){
+       /* if (bookDao.existsById(id)){
+            bookDao.deleteById(id);
+        }else {
+            throw new EntityNotFoundException(id+" not found");
+        }*/
+        Book book = bookDao.findById(id).get();
+        Author author = book.getAuthor();
+        author.removeBook(book);
+    }
+    public Book findBookById(int id){
+        return bookDao.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+    @Transactional
+    public void update(Book book){
+        Book existBook=findBookById(book.getId());
+        existBook.setAuthor(book.getAuthor());
+        existBook.setId(book.getId());
+        existBook.setTitle(book.getTitle());
+        existBook.setPrice(book.getPrice());
+        existBook.setImgUrl(book.getImgUrl());
+        existBook.setPublisher(book.getPublisher());
+        existBook.setYearPublished(book.getYearPublished());
     }
 
     @Transactional

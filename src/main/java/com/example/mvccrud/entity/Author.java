@@ -33,7 +33,7 @@ public class Author {
     private String email;
 
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author",orphanRemoval = true)
     private List<Book> books = new ArrayList<>();
 
     public Author() {
@@ -47,5 +47,9 @@ public class Author {
     public void addBook(Book book){
         book.setAuthor(this);
         books.add(book);
+    }
+    public void removeBook(Book book){
+        book.setAuthor(null);
+        books.remove(book);
     }
 }
