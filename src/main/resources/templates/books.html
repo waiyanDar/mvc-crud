@@ -17,7 +17,7 @@
                 <div class="card-header">
                     <h3>Books <i class="bi bi-book"></i></h3>
                 </div>
-                <div class="card-body">
+                <div class="card-body  rounded-3">
                     <table class="table table-striped">
                         <thead>
                         <tr>
@@ -32,37 +32,42 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <form action="#">
+                        <form th:action="@{/ui/update/book}" th:object="${updateBook}" method="post">
                             <tr th:each="bk : ${books}">
-                                <td th:text="${bk.id}"></td>
+                                <td th:text="${bk.id}" th:if="${!bk.render}"></td>
+                                <td th:if="${bk.render}" th:text="${bk.id}"></td>
                                 <td th:text="${bk.title}" th:if="${!bk.render}"></td>
-                                <td th:if="${bk.render}"><input type="text" class="form-control" ></td>
+                                <td th:if="${bk.render}"><input type="text" th:field="*{title}" class="form-control" ></td>
 
                                 <td th:text="${'$'+ bk.price}" th:if="${!bk.render}"></td>
-                                <td th:if="${bk.render}"><input type="text" class="form-control" ></td>
+                                <td th:if="${bk.render}"><input type="text" th:field="*{price}" class="form-control" ></td>
 
                                 <td th:text="${bk.yearPublished}" th:if="${!bk.render}"></td>
-                                <td th:if="${bk.render}"><input type="text" class="form-control" ></td>
+                                <td th:if="${bk.render}"><input type="text" th:field="*{yearPublished}" class="form-control" ></td>
 
                                 <td th:text="${bk.publisher}" th:if="${!bk.render}"></td>
-                                <td th:if="${bk.render}"><input type="text" class="form-control" ></td>
+                                <td th:if="${bk.render}"><input type="text" th:field="*{publisher}" class="form-control" ></td>
 
-                                <td th:text="${bk.author.name}"></td>
+                                <td th:text="${bk.author.name}" th:if="${!bk.render}"></td>
+                                <td th:if="${bk.render}" th:text="${bk.author.name}"></td>
+                                    <td th:if="${!bk.render}">
+                                        <a th:href="@{'/book/remove?id='+${bk.id}}"
+                                           class="btn btn-outline-danger">Delete</a>
+                                    </td>
+                                    <td th:if="${!bk.render}">
+                                        <a th:href="@{'/book/ui-update?id='+${bk.id}}" class="btn btn-outline-info">Update</a>
+                                    </td>
+                                    <td th:if="${bk.render}">
+                                    <input type="submit" value="Save" class="btn btn-outline-primary">
+                                    </td>
                                 <td>
-                                    <a th:href="@{'/book/remove?id='+${bk.id}}"
-                                       class="btn btn-outline-danger">Delete</a>
-<!--                                    <a th:href="@{'/book/remove?id='+${bk.id}}"></a>-->
-                                </td>
-                                <td>
-                                    <a th:href="@{'/book/ui-update?id='+${bk.id}}" class="btn btn-outline-info">Update</a>
+                                <a th:if="${bk.render}" th:href="@{/list-books}" class="btn btn-outline-warning mr-auto">Cancel</a>
                                 </td>
                             </tr>
                         </form>
                         </tbody>
                     </table>
                     <a th:href="@{/book-form}" class="btn btn-primary my-3">New Book</a>
-                    <a th:each="bk1 : ${books}" th:if="${bk1.render}" th:href="@{/list-books}"
-                       class="btn btn-outline-warning mr-auto">Cancel</a>
                 </div>
             </div>
         </div>

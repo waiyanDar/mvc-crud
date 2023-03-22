@@ -62,4 +62,7 @@ public class BookService {
       author.addBook(book);
       bookDao.save(book);
     }
+    public void updateAgain(Book book){
+        bookDao.saveAndFlush(book);
+    }
 }

@@ -22,6 +22,11 @@ public class BooksController {
         this.bookService = bookService;
     }
 
+    @GetMapping("/book/details")
+    public String detailsBook(@RequestParam("id")int id,Model model){
+        model.addAttribute("book",bookService.findBookById(id));
+        return "details-book";
+    }
     @PostMapping("/book/update")
     public String saveBook(@Valid Book book,BindingResult result,Model model,RedirectAttributes attributes){
         if(result.hasErrors()){
@@ -34,10 +39,15 @@ public class BooksController {
         attributes.addFlashAttribute("update",true);
         return "redirect:/list-books";
     }
-
+    String imgUrl;
+    Author author;
+    int uiUpdateId;
     @GetMapping("/book/ui-update")
     public String uIUpdate(@RequestParam("id")int id, Model model){
         Book updateBook = bookService.findBookById(id);
+        imgUrl=updateBook.getImgUrl();
+        author=updateBook.getAuthor();
+        uiUpdateId = updateBook.getId();
         List<Book> bookList=bookService.listBooks().stream()
 //                .filter(b -> b.equals(updateBook))
                 .map(b ->{
@@ -47,7 +57,22 @@ public class BooksController {
                     return b;
                 }).collect(Collectors.toList());
         model.addAttribute("books",bookList);
+        model.addAttribute("updateBook",updateBook);
         return "books";
+    }
+    @PostMapping("/ui/update/book")
+    public String updateBookAgain(Book updateBook,BindingResult result,RedirectAttributes attributes){
+        if(result.hasErrors()){
+            return "redirect:/book/ui-update";
+        }
+        updateBook.setImgUrl(imgUrl);
+        updateBook.setAuthor(author);
+        updateBook.setId(uiUpdateId);
+        updateBook.setRender(false);
+        attributes.addFlashAttribute("update",true);
+        bookService.updateAgain(updateBook);
+
+        return "redirect:/list-books";
     }
 
     @GetMapping("/book/update")
@@ -67,7 +92,7 @@ public class BooksController {
     }
     @GetMapping({"/","/home"})
     public ModelAndView index(ModelMap model){
-       return new ModelAndView("books","books",bookService.listBooks());
+       return new ModelAndView("home","books",bookService.listBooks());
     }
     @GetMapping("/author-form")
     public String authorForm(Model model){
@@ -75,10 +100,11 @@ public class BooksController {
         return "author-form";
     }
     @PostMapping("/author-form")
-    public String saveAuthor(@Valid Author author, BindingResult result){
+    public String saveAuthor(@Valid Author author, BindingResult result,RedirectAttributes attributes){
         if(result.hasErrors()){
             return "author-form";
         }
+        attributes.addFlashAttribute("save",true);
         bookService.saveAuthor(author);
         return "redirect:/authors";
     }
