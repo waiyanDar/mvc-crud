@@ -1,5 +1,6 @@
 package com.example.mvccrud.controller;
 
+import com.example.mvccrud.ds.Cart;
 import com.example.mvccrud.entity.Author;
 import com.example.mvccrud.entity.Book;
 import com.example.mvccrud.service.BookService;
@@ -18,8 +19,21 @@ import java.util.stream.Collectors;
 @Controller
 public class BooksController {
     private final BookService bookService;
-    public BooksController(BookService bookService) {
+    private final Cart cart;
+    public BooksController(BookService bookService,Cart cart) {
         this.bookService = bookService;
+        this.cart=cart;
+    }
+
+    @GetMapping("/cart/add-cart")
+    public String addToCart(@RequestParam("id")int id){
+        bookService.addToCart(id);
+        return "redirect:/book/details?id="+id;
+    }
+
+    @ModelAttribute("cartSize")
+    public int cartSize(){
+        return bookService.cartSize();
     }
 
     @GetMapping("/book/details")
