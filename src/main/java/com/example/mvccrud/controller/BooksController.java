@@ -23,10 +23,8 @@ public class BooksController {
     private final BookService bookService;
     private boolean changeButton;
 
-    //    private final Cart cart;
     public BooksController(BookService bookService, Cart cart) {
         this.bookService = bookService;
-//        this.cart=cart;
     }
 
     @ModelAttribute("changeButton")
