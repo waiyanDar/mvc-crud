@@ -10,16 +10,26 @@ import java.util.Set;
 @Component
 public class Cart {
     private Set<CartItem>  cartItems= new HashSet<>();
+
+    public Set<CartItem> getCartItems(){
+        return cartItems;
+    }
     public void addToCart(CartItem cartItem){
         this.cartItems.add(cartItem);
     }
     public void removeFromCart(CartItem cartItem){
         this.cartItems.remove(cartItem);
     }
+
     public void clearCart(){
         this.cartItems.clear();
     }
-    public int cartSize(){
+    public int  cartSize(){
         return this.cartItems.size();
     }
+
+    public void setCartItems(Set<CartItem> cartItems) {
+        this.cartItems = cartItems;
+    }
+
 }
