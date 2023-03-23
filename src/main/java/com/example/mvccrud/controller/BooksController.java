@@ -21,14 +21,33 @@ import java.util.stream.Collectors;
 @Controller
 public class BooksController {
     private final BookService bookService;
+    private boolean changeButton;
 
     //    private final Cart cart;
     public BooksController(BookService bookService, Cart cart) {
         this.bookService = bookService;
 //        this.cart=cart;
     }
+
+    @ModelAttribute("changeButton")
+    public boolean isChangeButton() {
+        return changeButton;
+    }
+
+    @PostMapping("/check-out-v2")
+    public String checkOutV2(CartItem cartItem, Model model) {
+        model.addAttribute("cartItems", bookService.getCartItems());
+        int i = 0;
+        for (CartItem cartItem1 : bookService.getCartItems()) {
+            cartItem1.setQuantity(cartItem.getQuantityLinkedList().get(i));
+            cartItem1.setRender(false);
+            i++;
+        }
+        return "redirect:/view-cart";
+    }
+
     @GetMapping("/check-out-v1")
-    public String checkOutV1(Model model){
+    public String checkOutV1(Model model) {
         Set<CartItem> cartItems = bookService.getCartItems()
                 .stream().map(
                         item -> {
@@ -37,7 +56,9 @@ public class BooksController {
                         }
                 )
                 .collect(Collectors.toSet());
-        model.addAttribute("cartItems",cartItems);
+        model.addAttribute("cartItem", new CartItem());
+        model.addAttribute("cartItems", cartItems);
+        model.addAttribute("changeButton", true);
         return "cart-view";
     }
 
@@ -49,6 +70,8 @@ public class BooksController {
 
     @GetMapping("/view-cart")
     public String viewCart(Model model) {
+        model.addAttribute("cartItem", new CartItem());
+//        model.addAttribute("changeButton",false);
         model.addAttribute("cartItems", bookService.getCartItems());
         return "cart-view";
     }

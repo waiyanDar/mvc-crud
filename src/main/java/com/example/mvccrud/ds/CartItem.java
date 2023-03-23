@@ -20,6 +20,9 @@ public class CartItem{
        private boolean render;
        private LinkedList<Integer> quantityLinkedList = new LinkedList<>();
 
+    public CartItem() {
+    }
+
     public CartItem(int id, String title, double price, int quantity) {
         this.id = id;
         this.title = title;
