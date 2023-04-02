@@ -25,6 +25,7 @@ public class SecurityService {
     public void signUp(User user){
         Role role= new Role("ROLE_USER");
         Role userRole= roleDao.findRoleByName("ROLE_USER").orElse(role);
+//        System.out.println("nani");
         user.addRole(userRole);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.save(user);

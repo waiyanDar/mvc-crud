@@ -3,7 +3,7 @@
 
 <body>
 <main role="main">
-    <div class="container my-4">
+    <div class="container my-4" style="max-width: 500px;">
         <div class="row">
             <div class="col">
                 <div class="card shadow">
@@ -24,7 +24,7 @@
                             <div class="form-group">
                                 <label for="dob">DateOfBirth</label>
                                 <input type="date" id="dob" th:field="*{dateOfBirth}" class="form-control"
-                                th:classappend="${#fields.hasErrors('dateOfBirth')} ? 'is-invalid'">
+                                       th:classappend="${#fields.hasErrors('dateOfBirth')} ? 'is-invalid'">
                                 <small class="invalid-feedback" th:if="${#fields.hasErrors('dateOfBirth')}"
                                        th:errors="*{dateOfBirth}">
                                 </small>
@@ -32,7 +32,7 @@
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <input type="text" id="email" class="form-control" th:field="*{email}"
-                                th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'">
+                                       th:classappend="${#fields.hasErrors('email')} ? 'is-invalid'">
                                 <small class="invalid-feedback" th:if="${#fields.hasErrors('email')}"
                                        th:errors="*{email}">
                                 </small>

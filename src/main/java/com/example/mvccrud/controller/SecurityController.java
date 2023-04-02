@@ -20,11 +20,6 @@ public class SecurityController {
         model.addAttribute("user", new User());
         return "signup";
     }
-
-    @GetMapping("/login")
-    public String login(){
-        return "login";
-    }
     @PostMapping("/register")
     public String register(User user, BindingResult result){
         if (result.hasErrors()){
@@ -32,5 +27,15 @@ public class SecurityController {
         }
         service.signUp(user);
         return "redirect:/login";
+    }
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+
+    @GetMapping("/login-error")
+    public String loginError(Model model){
+        model.addAttribute("loginError", true);
+        return "login";
     }
 }
