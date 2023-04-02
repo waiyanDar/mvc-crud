@@ -30,9 +30,10 @@
                                     <td th:text="${item.title}"></td>
                                     <td th:text="${item.price}"></td>
                                     <td th:if="${!item.render}" th:text="${item.quantity}"></td>
-                                    <td th:if="${item.render}"><input type="number" min="1"
-                                                                      th:field="*{quantityLinkedList}"
-                                                                      class="form-control"></td>
+                                    <td th:if="${item.render}" >
+                                        <input type="number" min="1"
+                                               th:field="*{quantityLinkedList}" class="form-control">
+                                    </td>
                                     <td th:if="${!changeButton}">
                                         <a th:href="@{'/cart-item/remove?id='+${item.id}}"
                                            class="btn btn-outline-danger">Remove</a>

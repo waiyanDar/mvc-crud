@@ -1,24 +1,34 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
-    <nav th:fragment="navbar" class="navbar navbar-expand-md bg-dark navbar-dark text-light">
-        <a class="navbar-brand" th:href="@{/}"><h3><i class="fas fa-book"></i> &nbsp;BOOK</h3></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="myNav">
-            <ul class="navbar-nav ml-auto" >
-                <li class="nav-item">
-                    <a th:href="@{/authors}" class="nav-link">Authors</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/list-books}" class="nav-link">Books</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/}" class="nav-link">Home</a>
-                </li>
-            </ul>
+<nav th:fragment="navbar" class="navbar navbar-expand-md bg-dark navbar-dark text-light">
+    <a class="navbar-brand" th:href="@{/}"><h3><i class="fas fa-book"></i> &nbsp;BOOK</h3></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#myNav">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="myNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a th:href="@{/authors}" class="nav-link">Authors</a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{/list-books}" class="nav-link">Books</a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{/}" class="nav-link">Home</a>
+            </li>
+        </ul>
+        <div sec:authorize="!isAuthenticated()">
+                <a th:href="@{/sign-up}" class="btn-link mr-3 text-white">Sign Up</a>
+                <a th:href="@{/login}" class="btn-link text-white">Log in</a>
         </div>
-    </nav>
+        <div sec:authorize="isAuthenticated()">
+            <a href="javascript: document.logoutForm.submit()" class="text-white">Log Out</a>
+            <form name="logoutForm" th:action="@{/logout}" method="post" th:hidden="true">
+            <input type="submit" hidden value="SignOut">
+            </form>
+        </div>
+    </div>
+</nav>
 </body>
 </html>

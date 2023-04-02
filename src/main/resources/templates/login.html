@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html th:replace="layout/masterLayout :: layout(~{::main})" xmlns:th="http://www.thymeleaf.org">
+<body>
+<main role="main">
+    <div class="container my-5 p-3">
+        <div class="justify-content-center align-items-center">
+            <h3 class="text-center">LogIn Page</h3>
+            <form th:action="@{/login}" method="post">
+                <div class="form-group">
+                    <input type="text" name="username" class="form-control" placeholder="User Name">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="password" class="form-control" placeholder="Password">
+                </div>
+                <input type="submit" class="btn btn-primary btn-block" value="Log In">
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+</html>
